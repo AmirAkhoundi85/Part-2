@@ -2,9 +2,15 @@ import React from "react";
 import Header from "./Header";
 import Content from "./Content";
 
+
 const Course = ({ course }) => {
-  let total = 0;
-  course.parts.forEach((item) => (total += item.exercises));
+  // let total = 0;
+  // course.parts.forEach((item) => (total += item.exercises));
+const total = course.parts.reduce((accumulator, currentPart) => {
+  return accumulator + currentPart.exercises;
+}, 0);
+
+
 
   return (
     <div>
