@@ -10,7 +10,7 @@ function App() {
     { name: "Mary Poppendieck", number: "39-23-6423122", id: 4 },
   ]);
    const [newName, setNewName] = useState("");
-   const [phone, setPhone] = useState("");
+   const [number, setPhone] = useState("");
    const [searchTerm, setSearchTerm] = useState("");
 
    const getName = (e) => {
@@ -25,15 +25,15 @@ function App() {
      e.preventDefault();
 
      const person = persons.find(
-       (item) => item.name === newName || item.phone === phone
+       (item) => item.name === newName || item.number === number
      );
 
      if (!person) {
-       const newPerson = { name: newName, phone: phone };
+       const newPerson = { name: newName, number: number };
        setPersons([...persons, newPerson]);
      } else {
        alert(
-         `${newName} with phone number ${phone} is already added to the phonebook`
+         `${newName} with number number ${number} is already added to the phonebook`
        );
      }
 
@@ -62,7 +62,7 @@ function App() {
            name: <input value={newName} onChange={getName} />
          </div>
          <div>
-           number : <input value={phone} onChange={getNumber} />
+           number : <input value={number} onChange={getNumber} />
          </div>
          <div>
            <button type="submit">add</button>
