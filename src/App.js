@@ -1,6 +1,9 @@
 import { useState } from "react";
 import "./App.css";
 import CoursesList from "./components/CoursesList";
+import Filter from "./components/Filter";
+import PersonForm from "./components/PersonForm";
+import Persons from "./components/Persons";
 
 function App() {
   const [persons, setPersons] = useState([
@@ -10,7 +13,7 @@ function App() {
     { name: "Mary Poppendieck", number: "39-23-6423122", id: 4 },
   ]);
    const [newName, setNewName] = useState("");
-   const [phone, setPhone] = useState("");
+   const [number, setPhone] = useState("");
    const [searchTerm, setSearchTerm] = useState("");
 
    const getName = (e) => {
@@ -25,15 +28,15 @@ function App() {
      e.preventDefault();
 
      const person = persons.find(
-       (item) => item.name === newName || item.phone === phone
+       (item) => item.name === newName || item.number === number
      );
 
      if (!person) {
-       const newPerson = { name: newName, phone: phone };
+       const newPerson = { name: newName, number: number };
        setPersons([...persons, newPerson]);
      } else {
        alert(
-         `${newName} with phone number ${phone} is already added to the phonebook`
+         `${newName} with number number ${number} is already added to the phonebook`
        );
      }
 
@@ -52,28 +55,12 @@ function App() {
    return (
      <div>
        <h2>Phonebook</h2>
-       <form onSubmit={addName}>
-         <div>
-           Filter shown with{" "}
-           <input value={searchTerm} onChange={handelSearch} />
-         </div>
-         <div>
-           <h3>add a new</h3>
-           name: <input value={newName} onChange={getName} />
-         </div>
-         <div>
-           number : <input value={phone} onChange={getNumber} />
-         </div>
-         <div>
-           <button type="submit">add</button>
-         </div>
-       </form>
-       <h2>Numbers</h2>
-       {filteredPersons.map((item, index) => (
-         <p key={index}>
-           {item.name} {item.number}
-         </p>
-       ))}
+       <Filter searchTerm={searchTerm} handelSearch={handelSearch} />
+
+       <h3>Add a new</h3>
+       <PersonForm newName={newName} getName={getName}  number={number} getNumber={getNumber} addName={addName}/>
+       <h3>Numbers</h3>
+       <Persons filteredPersons={filteredPersons}/>
      </div>
    );
    }
