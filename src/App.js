@@ -38,7 +38,13 @@ function App() {
 
     if (!person) {
       const newPerson = { name: newName, number: number };
-      setPersons([...persons, newPerson]);
+      
+      axios.post("http://localhost:3001/persons",newPerson )
+      .then((res)=>{
+        setPersons([...persons, res.data]);
+      });
+
+
     } else {
       alert(
         `${newName} with number number ${number} is already added to the phonebook`
