@@ -5,6 +5,7 @@ import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
 import axios from "axios";
+import personService from "./servises/persons"
 
 function App() {
   const [persons, setPersons] = useState([]);
@@ -14,10 +15,13 @@ function App() {
 
 
    useEffect(() => {
-      axios.get("http://localhost:3001/persons")
-      .then((res)=>{
-       setPersons(res.data)})
-      .catch((error)=>{console.log(error);});
+      personService.getAll()
+        .then((data) => {
+          setPersons(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
    },[]);
 
 
@@ -39,9 +43,9 @@ function App() {
     if (!person) {
       const newPerson = { name: newName, number: number };
       
-      axios.post("http://localhost:3001/persons",newPerson )
-      .then((res)=>{
-        setPersons([...persons, res.data]);
+      personService.create(newPerson)
+      .then((data)=>{
+        setPersons([...persons, data]);
       });
 
 
