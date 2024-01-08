@@ -12,6 +12,7 @@ function App() {
   const [newName, setNewName] = useState("");
   const [number, setPhone] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [message, setMessage]= useState("")
 
   useEffect(() => {
     personService
@@ -37,11 +38,14 @@ function App() {
 
     const person = persons.find((item) => item.name === newName);
     const newPerson = { name: newName, number: number };
+    
 
     if (!person) {
       personService.create(newPerson).then((data) => {
         setPersons([...persons, data]);
+         setMessage(`Added ${newName}`);
       });
+      
     } else {
       const result = window.confirm(
         `${newName} is already added to the phonebook, replace the old number with a new one?`
@@ -82,6 +86,7 @@ function App() {
   return (
     <div>
       <h2>Phonebook</h2>
+      {message && <h3 className="addNumber">{message}</h3>}
       <Filter searchTerm={searchTerm} handelSearch={handelSearch} />
       <h3>Add a new</h3>
       <PersonForm
